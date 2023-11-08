@@ -1,0 +1,9 @@
+twitter-status-data:
+  string-list:
+    - abc
+    - def
+    - aaf
+    - fsa
+    - ef
+  min-length: 10
+  max-length: 25
