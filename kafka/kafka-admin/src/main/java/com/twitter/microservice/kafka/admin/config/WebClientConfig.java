@@ -1,4 +1,4 @@
-package com.twitter.microservice.kafka.admin.client;
+package com.twitter.microservice.kafka.admin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

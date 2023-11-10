@@ -7,3 +7,19 @@ twitter-status-data:
     - ef
   min-length: 10
   max-length: 25
+
+retry-config:
+  initial-interval-ms:
+  max-interval-ms:
+  multiplier:
+  max-attempts:
+  sleep-time-ms:
+
+kafka-config-data:
+  kafka-broker-list:
+  schema-registry-key-url:
+  schema-registry:
+  topic-name:
+  topic-names-to-create:
+  num-of-partitions:
+  replication-factor:

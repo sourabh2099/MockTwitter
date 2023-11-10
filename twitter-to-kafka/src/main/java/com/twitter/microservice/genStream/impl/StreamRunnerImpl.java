@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.concurrent.Executors;
 
 @Component
 @Slf4j
@@ -47,13 +48,21 @@ public class StreamRunnerImpl implements StreamRunner {
     }
 
     @Override
-    public void initStream() {
-        int statusLen = RANDOM.nextInt(twitterStatusData.getMaxlength() - twitterStatusData.getMinLength() + 1)
-                + twitterStatusData.getMinLength();
-        String statusContent = getStatusContent(statusLen);
-        TwitterStatus status = createTwitterStatus(statusContent);
+    public void start() {
         // now set up avro and kafka modules
-        sendtoKafka(status);
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try{
+                while(true){
+                    int statusLen = RANDOM.nextInt(twitterStatusData.getMaxlength() - twitterStatusData.getMinLength() + 1)
+                            + twitterStatusData.getMinLength();
+                    String statusContent = getStatusContent(statusLen);
+                    TwitterStatus status = createTwitterStatus(statusContent);
+                    Thread.sleep(1000);
+                }
+            }catch (Exception e){
+                log.error("Found error while and sending status ");
+            }
+        });
     }
 
     private void sendtoKafka(TwitterStatus status) {
