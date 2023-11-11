@@ -1,8 +1,10 @@
-package com.twitter.microservice.genStream.impl;
+package com.twitter.microservice.twitter.to.kafka.runner.impl;
 
 import com.twitter.microservice.config.TwitterStatusData;
 import com.twitter.microservice.dto.TwitterStatus;
-import com.twitter.microservice.genStream.StreamRunner;
+import com.twitter.microservice.twitter.to.kafka.listener.TwitterStatusListener;
+import com.twitter.microservice.twitter.to.kafka.runner.StreamRunner;
+import com.twitter.microservice.twitter.to.kafka.utils.AppUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +12,11 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.concurrent.Executors;
 
-@Component
 @Slf4j
-public class StreamRunnerImpl implements StreamRunner {
-
+@Component
+public class TwitterStreamRunner implements StreamRunner {
     private final TwitterStatusData twitterStatusData;
+    private final TwitterStatusListener twitterStatusListener;
     private static final String SPACE = " ";
 
     private static final Random RANDOM = new Random();
@@ -43,34 +45,37 @@ public class StreamRunnerImpl implements StreamRunner {
             "porttitor"
     };
 
-    public StreamRunnerImpl(TwitterStatusData twitterStatusData) {
+    public TwitterStreamRunner(TwitterStatusData twitterStatusData,
+                               TwitterStatusListener twitterStatusListener) {
+
         this.twitterStatusData = twitterStatusData;
+        this.twitterStatusListener = twitterStatusListener;
     }
 
     @Override
     public void start() {
         // now set up avro and kafka modules
         Executors.newSingleThreadExecutor().submit(() -> {
-            try{
-                while(true){
+            try {
+                while (true) {
                     int statusLen = RANDOM.nextInt(twitterStatusData.getMaxlength() - twitterStatusData.getMinLength() + 1)
                             + twitterStatusData.getMinLength();
                     String statusContent = getStatusContent(statusLen);
                     TwitterStatus status = createTwitterStatus(statusContent);
+                    log.info("status --> {} {}",status.getStatus(),status.getId());
+                    twitterStatusListener.onStatus(status);
                     Thread.sleep(1000);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Found error while and sending status ");
             }
         });
     }
 
-    private void sendtoKafka(TwitterStatus status) {
-    }
-
     private TwitterStatus createTwitterStatus(String status) {
-        String userId = "USR" + RANDOM.nextInt(101);
+        String userId = "USR - " + RANDOM.nextInt(101);
         return TwitterStatus.builder()
+                .id(AppUtils.genRandomLong())
                 .createdAt(LocalDateTime.now())
                 .userId(userId)
                 .status(status)
