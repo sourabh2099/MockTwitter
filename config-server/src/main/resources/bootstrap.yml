@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sourabh2099/mocktwitter-config-server
+          default-label: main
+          username: sourabh2099
+          password: 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
+          clone-on-start: true
+    fail-fast: true
+
