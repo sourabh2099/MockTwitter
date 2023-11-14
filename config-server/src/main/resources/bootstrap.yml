@@ -8,7 +8,7 @@ spring:
           uri: https://github.com/sourabh2099/mocktwitter-config-server
           default-label: main
           username: sourabh2099
-          password: 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
+          password: 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
           clone-on-start: true
     fail-fast: true
 

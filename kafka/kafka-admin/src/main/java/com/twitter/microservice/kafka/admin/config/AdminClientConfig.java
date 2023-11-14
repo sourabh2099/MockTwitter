@@ -4,10 +4,12 @@ import com.twitter.microservice.config.KafkaConfigData;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.EnableRetry;
 
 import java.util.Map;
 
 @Configuration
+@EnableRetry
 public class AdminClientConfig {
     private final KafkaConfigData kafkaConfigData;
 
