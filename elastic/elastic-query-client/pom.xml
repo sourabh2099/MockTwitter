@@ -10,7 +10,6 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.leet.code</groupId>
     <artifactId>elastic-query-client</artifactId>
 
     <properties>
