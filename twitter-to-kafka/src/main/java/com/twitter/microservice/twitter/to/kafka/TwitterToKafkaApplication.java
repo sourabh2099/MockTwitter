@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 @Slf4j
 @SpringBootApplication
 @ComponentScan("com.twitter.microservice")
-public class TwitterToKafkaApplcation implements CommandLineRunner {
+public class TwitterToKafkaApplication implements CommandLineRunner {
     private final StreamRunner streamRunner;
     private final StreamInit streamInit;
 
-    public TwitterToKafkaApplcation(StreamRunner streamRunner,
-                                    StreamInit streamInit) {
+    public TwitterToKafkaApplication(StreamRunner streamRunner,
+                                     StreamInit streamInit) {
         this.streamRunner = streamRunner;
         this.streamInit = streamInit;
     }
 
     public static void main(String[] args) {
         log.info("Preparing to start application ");
-        SpringApplication.run(TwitterToKafkaApplcation.class, args);
+        SpringApplication.run(TwitterToKafkaApplication.class, args);
         log.info("Application Started at  {}", LocalDateTime.now());
     }
 
