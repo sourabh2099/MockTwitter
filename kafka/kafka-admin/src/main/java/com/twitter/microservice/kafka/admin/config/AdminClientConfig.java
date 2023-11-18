@@ -3,6 +3,7 @@ package com.twitter.microservice.kafka.admin.config;
 import com.twitter.microservice.config.KafkaConfigData;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.admin.AdminClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;
 
@@ -16,8 +17,9 @@ public class AdminClientConfig {
     public AdminClientConfig(KafkaConfigData kafkaConfigData) {
         this.kafkaConfigData = kafkaConfigData;
     }
+    @Bean
     public AdminClient adminClient(){
         return AdminClient.create(
-                Map.of(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG,kafkaConfigData.getKafkaBrokerList()));
+                Map.of(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG,kafkaConfigData.getBootstrapServers()));
     }
 }

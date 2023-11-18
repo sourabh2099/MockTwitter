@@ -1,10 +1,9 @@
 spring:
   application:
-    name: twitter-to-kafka-service
+    name: twitter_to_kafka_service
   profiles:
-    active: twitter_to_kafka
-  spring:
-    cloud:
-      name: twitter-to-kafka-service,config-client
-      uri: http://localhost:8080
+    active: dev
+  config:
+    import: 'configserver:'
+
 

@@ -24,7 +24,7 @@ public class KafkaProducerImpl implements KafkaProducer<Long, TwitterStatusModel
     public void sendMsg(String topicsName, Long key, TwitterStatusModel value) {
         LOG.info("sending message to topic {} with key {} and value {}",topicsName,key,value);
         ListenableFuture<SendResult<Long, TwitterStatusModel>> kafkaResultFuture =
-                kafkaTemplate.send(topicsName, key, value);
+                (ListenableFuture<SendResult<Long, TwitterStatusModel>>) kafkaTemplate.send(topicsName, key, value);
         afterSendProcess(topicsName,value,kafkaResultFuture);
 
     }

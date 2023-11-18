@@ -67,7 +67,7 @@ public class KafkaAdminClient {
     private HttpStatusCode getSchemaRegistryStatus() {
         try{
             return webClient.get()
-                    .uri(kafkaConfigData.getSchemaRegistry())
+                    .uri(kafkaConfigData.getSchemaRegistryUrl())
                     .exchangeToMono(clientResponse -> clientResponse.bodyToMono(ClientResponse.class))
                     .map(ClientResponse::statusCode)
                     .block();

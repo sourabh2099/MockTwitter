@@ -11,11 +11,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Configuration
-@ConfigurationProperties(prefix = "kafka-config-data")
+@ConfigurationProperties(prefix = "kafka-config")
 public class KafkaConfigData {
-    private List<String> kafkaBrokerList;
-    private String schemaRegistryKeyUrl;
-    private String schemaRegistry;
+    private String bootstrapServers;
+    private String schemaRegistryUrlKey;
+    private String schemaRegistryUrl;
     private String topicName;
     private List<String> topicNamesToCreate;
     private Integer numOfPartitions;

@@ -20,6 +20,10 @@
     <dependencies>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
+            <artifactId>common-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
             <artifactId>app-data</artifactId>
         </dependency>
         <dependency>
