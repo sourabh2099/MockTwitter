@@ -35,13 +35,13 @@ public class KafkaConsumerImpl implements KafkaConsumer<TwitterStatusModel>
     public void onApplicationEvent(ApplicationStartedEvent event) {
         kafkaAdminClient.checkTopicsCreated();
         LOG.info("Received on App Start event topics {} are ready to use", kafkaConfigData.getTopicNamesToCreate().toArray());
-        kafkaListenerEndpointRegistry.getListenerContainer("twitterTopicListener").start();
+        kafkaListenerEndpointRegistry.getListenerContainer(kafkaConfigData.getTopicName()).start();
     }
 
     @Override
     @KafkaListener(id = "twitterTopicListener", topics = "${kafka-config.topic-name}")
     public void receive(List<TwitterStatusModel> messages, List<Long> keys, List<Integer> partitions, List<Long> offsets) {
-        LOG.info("Found {} messages with keys {}, partitions {} ,offserts {}", messages.size()
+        LOG.info("Found {} messages with keys {}, partitions {} ,offserts {}", messages.size(),
                 keys, partitions, offsets);
 
     }
