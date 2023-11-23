@@ -7,28 +7,15 @@
         <groupId>com.twitter.microservice</groupId>
         <artifactId>mocktwitter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>elastic-query-client</artifactId>
+    <groupId>com.twitter.microservice</groupId>
+    <artifactId>common-utils</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter.microservice</groupId>
-            <artifactId>app-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter.microservice</groupId>
-            <artifactId>common-utils</artifactId>
-        </dependency>
-    </dependencies>
+
 </project>

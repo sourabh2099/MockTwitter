@@ -27,6 +27,7 @@
         <module>elastic/elastic-query-client</module>
         <module>config-server</module>
         <module>elastic/elastic-index-client</module>
+        <module>common-utils</module>
     </modules>
 
     <properties>
@@ -104,8 +105,11 @@
                 <artifactId>elastic-query-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-
+            <dependency>
+                <groupId>com.twitter.microservice</groupId>
+                <artifactId>common-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
 
             <dependency>
