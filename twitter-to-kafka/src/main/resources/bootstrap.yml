@@ -5,5 +5,9 @@ spring:
     active: dev
   config:
     import: 'configserver:'
+  cloud:
+    config:
+      username: spring_cloud_user
+      password: '1234'
 
 
