@@ -29,6 +29,9 @@
         <module>elastic/elastic-index-client</module>
         <module>common-utils</module>
         <module>elastic-query-service</module>
+        <module>elastic-query-web-client</module>
+        <module>elastic-query-service-common</module>
+        <module>elastic-query-web-client-common</module>
     </modules>
 
     <properties>
@@ -54,7 +57,16 @@
     </repositories>
     <dependencyManagement>
         <dependencies>
-
+            <dependency>
+                <groupId>com.twitter.microservice</groupId>
+                <artifactId>elastic-query-web-client-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter.microservice</groupId>
+                <artifactId>elastic-query-service-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.twitter.microservice</groupId>
                 <artifactId>app-data</artifactId>
@@ -240,6 +252,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>

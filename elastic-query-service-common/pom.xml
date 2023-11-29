@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>elastic-query-service</artifactId>
+    <artifactId>elastic-query-service-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -30,20 +30,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-query-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-query-service-common</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
             <artifactId>elastic-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
     </dependencies>
 

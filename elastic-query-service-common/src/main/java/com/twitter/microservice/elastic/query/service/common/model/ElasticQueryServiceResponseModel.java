@@ -1,9 +1,10 @@
-package com.twitter.microservice.elastic.query.service.model;
+package com.twitter.microservice.elastic.query.service.common.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ElasticQueryServiceResponseModel {
+public class ElasticQueryServiceResponseModel extends RepresentationModel<ElasticQueryServiceResponseModel> {
     private String id;
     private String text;
     private long userId;

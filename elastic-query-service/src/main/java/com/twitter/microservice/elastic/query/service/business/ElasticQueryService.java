@@ -1,6 +1,7 @@
 package com.twitter.microservice.elastic.query.service.business;
 
-import com.twitter.microservice.elastic.query.service.model.ElasticQueryServiceResponseModel;
+
+import com.twitter.microservice.elastic.query.service.common.model.ElasticQueryServiceResponseModel;
 
 import java.util.List;
 

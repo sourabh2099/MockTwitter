@@ -1,8 +1,6 @@
-package com.twitter.microservice.elastic.query.service.transformer;
-
-import com.twitter.microservice.elastic.model.IndexModel;
+package com.twitter.microservice.elastic.query.service.common.transformer;
 import com.twitter.microservice.elastic.model.impl.TwitterIndexModel;
-import com.twitter.microservice.elastic.query.service.model.ElasticQueryServiceResponseModel;
+import com.twitter.microservice.elastic.query.service.common.model.ElasticQueryServiceResponseModel;
 import org.springframework.stereotype.Component;
 
 @Component
