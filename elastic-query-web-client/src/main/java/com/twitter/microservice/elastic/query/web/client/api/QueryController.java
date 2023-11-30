@@ -14,6 +14,7 @@ import java.util.List;
 
 @Controller
 public class QueryController {
+    // dummy commit
     private static final Logger LOG = LoggerFactory.getLogger(QueryController.class);
     private final ElasticQueryWebClient elasticQueryWebClient;
 
