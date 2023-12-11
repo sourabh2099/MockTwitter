@@ -3,18 +3,16 @@ package com.twitter.microservice.elastic.query.service.security;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.fasterxml.jackson.databind.util.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
-
+import org.springframework.core.convert.converter.Converter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.twitter.microservice.elastic.query.service.Constants.NA;
-
 public class TwitterQueryUserJwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
     private final TwitterQueryUserDetailsService twitterQueryUserDetailsService;
@@ -43,15 +41,6 @@ public class TwitterQueryUserJwtConverter implements Converter<Jwt, AbstractAuth
                 );
     }
 
-    @Override
-    public JavaType getInputType(TypeFactory typeFactory) {
-        return null;
-    }
-
-    @Override
-    public JavaType getOutputType(TypeFactory typeFactory) {
-        return null;
-    }
     Collection<SimpleGrantedAuthority> getAuthoritiesFromJwt(Jwt jwt){
         return getCombinedAuthorities(jwt).stream()
                 .map(SimpleGrantedAuthority::new)

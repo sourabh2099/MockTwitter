@@ -2,12 +2,13 @@ package com.twitter.microservice.elastic.query.service.security;
 
 import com.twitter.microservice.config.ElasticQueryConfigData;
 import com.twitter.microservice.config.ElasticQueryServiceConfigData;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-
+@Qualifier("elastic-query-service-audience-validator")
 @Service
 public class AudienceValidator implements OAuth2TokenValidator<Jwt> {
     private final ElasticQueryServiceConfigData elasticQueryServiceConfigData;
