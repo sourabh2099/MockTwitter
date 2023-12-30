@@ -18,35 +18,38 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig<K extends Serializable,V extends SpecificRecordBase>{
-    private final KafkaProducerConfigData producerConfigData;
+    private final KafkaProducerConfigData kafkaProducerConfigData;
     private final KafkaConfigData kafkaConfigData;
     private static Logger LOG = LoggerFactory.getLogger(KafkaProducerConfig.class);
 
     public KafkaProducerConfig(KafkaProducerConfigData producerConfigData,
                                KafkaConfigData kafkaConfigData) {
-        this.producerConfigData = producerConfigData;
+        this.kafkaProducerConfigData = producerConfigData;
         this.kafkaConfigData = kafkaConfigData;
     }
     @Bean
     public Map<String, Object> createConfig() {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> props = new HashMap<>();
         LOG.info("fetched config data {}",kafkaConfigData);
-        map.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getBootstrapServers());
-        map.put(ProducerConfig.BATCH_SIZE_CONFIG, producerConfigData.getBatchSize()
-                * producerConfigData.getBatchSizeBoostFactor());
-        map.put(ProducerConfig.LINGER_MS_CONFIG,producerConfigData.getAcks());
-        map.put(ProducerConfig.ACKS_CONFIG,producerConfigData.getAcks());
-        map.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,producerConfigData.getCompressionType());
-        map.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, producerConfigData.getRequestTimeoutMs());
-        map.put(ProducerConfig.RETRIES_CONFIG, producerConfigData.getRetryCount());
-        map.put(kafkaConfigData.getSchemaRegistryUrlKey(), kafkaConfigData.getSchemaRegistryUrl());
-        map.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, producerConfigData.getKeySerializerClass());
-        return map;
+        LOG.info("fetched config data {}",kafkaProducerConfigData);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getBootstrapServers());
+        props.put(kafkaConfigData.getSchemaRegistryUrlKey(), kafkaConfigData.getSchemaRegistryUrl());
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, kafkaProducerConfigData.getKeySerializerClass());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, kafkaProducerConfigData.getValueSerializerClass());
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, kafkaProducerConfigData.getBatchSize() *
+                kafkaProducerConfigData.getBatchSizeBoostFactor());
+        props.put(ProducerConfig.LINGER_MS_CONFIG, kafkaProducerConfigData.getLingerMs());
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, kafkaProducerConfigData.getCompressionType());
+        props.put(ProducerConfig.ACKS_CONFIG, kafkaProducerConfigData.getAcks());
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaProducerConfigData.getRequestTimeoutMs());
+        props.put(ProducerConfig.RETRIES_CONFIG, kafkaProducerConfigData.getRetryCount());
+        return props;
     }
     @Bean
     public ProducerFactory<K,V>  producerFactory(){
         return new DefaultKafkaProducerFactory<>(createConfig());
     }
+    @Bean
     KafkaTemplate<K,V> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }

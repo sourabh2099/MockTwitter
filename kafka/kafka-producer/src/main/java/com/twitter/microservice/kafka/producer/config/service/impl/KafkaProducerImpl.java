@@ -2,14 +2,16 @@ package com.twitter.microservice.kafka.producer.config.service.impl;
 
 import com.twitter.microservice.kafka.model.TwitterStatusModel;
 import com.twitter.microservice.kafka.producer.config.service.KafkaProducer;
+import jakarta.annotation.PreDestroy;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @Component
 public class KafkaProducerImpl implements KafkaProducer<Long, TwitterStatusModel> {
@@ -19,29 +21,38 @@ public class KafkaProducerImpl implements KafkaProducer<Long, TwitterStatusModel
     public KafkaProducerImpl(KafkaTemplate<Long, TwitterStatusModel> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
+    @PreDestroy
+    public void close(){
+        if (kafkaTemplate != null) {
+            LOG.info("Closing kafka producer!");
+            kafkaTemplate.destroy();
+        }
+    }
+
 
     @Override
     public void sendMsg(String topicsName, Long key, TwitterStatusModel value) {
         LOG.info("sending message to topic {} with key {} and value {}",topicsName,key,value);
-        ListenableFuture<SendResult<Long, TwitterStatusModel>> kafkaResultFuture =
-                (ListenableFuture<SendResult<Long, TwitterStatusModel>>) kafkaTemplate.send(topicsName, key, value);
-        afterSendProcess(topicsName,value,kafkaResultFuture);
+        CompletableFuture<SendResult<Long, TwitterStatusModel>> kafkaResultFuture =
+                kafkaTemplate.send(topicsName, key, value);
+        kafkaResultFuture.whenComplete(getCallback(topicsName,value));
+       // afterSendProcess(topicsName,value,kafkaResultFuture);
 
     }
 
-    private void afterSendProcess(String topicsName,TwitterStatusModel value, ListenableFuture<SendResult<Long, TwitterStatusModel>> kafkaResultFuture) {
-        kafkaResultFuture.addCallback(new ListenableFutureCallback<SendResult<Long, TwitterStatusModel>>() {
-            @Override
-            public void onFailure(Throwable ex) {
-                LOG.error("Found error while trying to send message {} to topic {}",value,topicsName);
+    private BiConsumer<SendResult<Long, TwitterStatusModel>, Throwable> getCallback(String topicName, TwitterStatusModel message) {
+        return (result, ex) -> {
+            if (ex == null) {
+                RecordMetadata metadata = result.getRecordMetadata();
+                LOG.info("Received new metadata. Topic: {}; Partition {}; Offset {}; Timestamp {}, at time {}",
+                        metadata.topic(),
+                        metadata.partition(),
+                        metadata.offset(),
+                        metadata.timestamp(),
+                        System.nanoTime());
+            } else {
+                LOG.error("Error while sending message {} to topic {}", message.toString(), topicName, ex);
             }
-
-            @Override
-            public void onSuccess(SendResult<Long, TwitterStatusModel> result) {
-                RecordMetadata recordMetadata = result.getRecordMetadata();
-                LOG.info("Successfully sent msg {} {} {} {}",recordMetadata.offset(),recordMetadata.partition(),
-                        recordMetadata.topic(),recordMetadata.timestamp());
-            }
-        });
+        };
     }
 }

@@ -55,7 +55,7 @@ public class TwitterStreamRunner implements StreamRunner {
     @Override
     public void start() {
         // now set up avro and kafka modules
-        Executors.newSingleThreadExecutor().submit(() -> {
+
             try {
                 while (true) {
                     int statusLen = RANDOM.nextInt(twitterStatusData.getMaxlength() - twitterStatusData.getMinLength() + 1)
@@ -67,9 +67,9 @@ public class TwitterStreamRunner implements StreamRunner {
                     Thread.sleep(1000);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 log.error("Found error while and sending status ");
             }
-        });
     }
 
     private TwitterStatus createTwitterStatus(String status) {

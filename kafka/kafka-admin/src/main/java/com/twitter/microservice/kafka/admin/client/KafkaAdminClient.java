@@ -15,6 +15,8 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.support.ClientResponseWrapper;
+import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.List;
@@ -57,7 +59,9 @@ public class KafkaAdminClient {
         Integer maxAttempts = retryConfigData.getMaxAttempts();
         int multiplier = retryConfigData.getMultiplier().intValue();
         Long sleepTimeMs = retryConfigData.getSleepTimeMs();
+        System.out.println("Retry Config data " + retryConfigData.toString());
         while (!getSchemaRegistryStatus().is2xxSuccessful()) {
+            LOG.info("Schema registry Status {}",getSchemaRegistryStatus());
             checkMaxRetry(retryCount++,maxAttempts);
             sleep(sleepTimeMs);
             sleepTimeMs*=multiplier;
@@ -68,10 +72,14 @@ public class KafkaAdminClient {
         try{
             return webClient.get()
                     .uri(kafkaConfigData.getSchemaRegistryUrl())
-                    .exchangeToMono(clientResponse -> clientResponse.bodyToMono(ClientResponse.class))
-                    .map(ClientResponse::statusCode)
+                    .exchangeToMono(clientResponse -> {
+                        if(clientResponse.statusCode().is2xxSuccessful()){
+                            return Mono.just(HttpStatusCode.valueOf(200));
+                        }return Mono.just(HttpStatus.BAD_REQUEST);
+                    })
                     .block();
         }catch (Exception e){
+            e.printStackTrace();
             return HttpStatusCode.valueOf(HttpStatus.SERVICE_UNAVAILABLE.value());
         }
     }
