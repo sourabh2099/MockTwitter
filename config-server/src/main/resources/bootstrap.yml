@@ -13,5 +13,4 @@ spring:
   security:
     user:
       name: spring_cloud_user
-      password: '1234'
 
