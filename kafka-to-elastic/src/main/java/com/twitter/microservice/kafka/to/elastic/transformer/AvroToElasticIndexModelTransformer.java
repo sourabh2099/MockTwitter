@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,9 @@ public class AvroToElasticIndexModelTransformer {
                         TwitterIndexModel.builder()
                                 .id(String.valueOf(item.getId()))
                                 .text(item.getText())
-                                .userId(Long.valueOf(String.valueOf(item.getUserId())))
-                                .createAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getCreatedAt()), ZoneId.systemDefault()))
+                                .userId(item.getUserId())
+                                .createdAt(ZonedDateTime.ofInstant(Instant.ofEpochMilli(item.getCreatedAt()),
+                                        ZoneId.systemDefault()))
                                 .build())
                 .collect(Collectors.toList());
     }

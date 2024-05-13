@@ -1,6 +1,5 @@
 package com.twitter.microservice.elastic.query.service.security;
 
-import com.twitter.microservice.config.ElasticQueryConfigData;
 import com.twitter.microservice.config.ElasticQueryServiceConfigData;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.core.OAuth2Error;

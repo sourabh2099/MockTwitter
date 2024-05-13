@@ -64,7 +64,7 @@ public class TwitterStreamRunner implements StreamRunner {
                     TwitterStatus status = createTwitterStatus(statusContent);
                     log.info("status --> {} {}",status.getStatus(),status.getId());
                     twitterStatusListener.onStatus(status);
-                    Thread.sleep(1000);
+                    Thread.sleep(10000);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,7 +73,7 @@ public class TwitterStreamRunner implements StreamRunner {
     }
 
     private TwitterStatus createTwitterStatus(String status) {
-        String userId = "USR - " + RANDOM.nextInt(101);
+        String userId = String.valueOf(RANDOM.nextInt(101));
         return TwitterStatus.builder()
                 .id(AppUtils.genRandomLong())
                 .createdAt(LocalDateTime.now())

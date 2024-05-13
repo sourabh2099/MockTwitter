@@ -31,7 +31,7 @@ public class KafkaProducerConfig<K extends Serializable,V extends SpecificRecord
     public Map<String, Object> createConfig() {
         Map<String, Object> props = new HashMap<>();
         LOG.info("fetched config data {}",kafkaConfigData);
-        LOG.info("fetched config data {}",kafkaProducerConfigData);
+        LOG.info("fetched producer config data {}",kafkaProducerConfigData);
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getBootstrapServers());
         props.put(kafkaConfigData.getSchemaRegistryUrlKey(), kafkaConfigData.getSchemaRegistryUrl());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, kafkaProducerConfigData.getKeySerializerClass());

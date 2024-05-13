@@ -4,6 +4,8 @@ import com.twitter.microservice.config.KafkaConfigData;
 import com.twitter.microservice.config.KafkaConsumerConfigData;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -20,6 +22,7 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig<K extends Serializable,V extends SpecificRecordBase> {
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaConsumerConfig.class);
     private final KafkaConfigData kafkaConfigData;
     private final KafkaConsumerConfigData kafkaConsumerConfigData;
 
@@ -32,12 +35,15 @@ public class KafkaConsumerConfig<K extends Serializable,V extends SpecificRecord
     @Bean
     public Map<String,Object> consumerConfigs(){
         Map<String,Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getKafkaBrokerList());
+        LOG.info("fetched config data {}",kafkaConfigData);
+        LOG.info("fetched consumer config data {}",kafkaConsumerConfigData);
+
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getBootstrapServers());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, kafkaConsumerConfigData.getKeyDeserializer());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, kafkaConsumerConfigData.getValueDeserializer());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConsumerConfigData.getConsumerGroupId());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaConsumerConfigData.getAutoOffsetReset());
-        props.put(kafkaConfigData.getSchemaRegistryKeyUrl(), kafkaConfigData.getSchemaRegistry());
+        props.put(kafkaConfigData.getSchemaRegistryUrlKey(), kafkaConfigData.getSchemaRegistryUrl());
         props.put(kafkaConsumerConfigData.getSpecificAvroReaderKey(), kafkaConsumerConfigData.getSpecificAvroReader());
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, kafkaConsumerConfigData.getSessionTimeoutMs());
         props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, kafkaConsumerConfigData.getHeartbeatIntervalMs());

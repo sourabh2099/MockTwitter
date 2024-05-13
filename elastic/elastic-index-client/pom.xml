@@ -26,6 +26,14 @@
             <groupId>com.twitter.microservice</groupId>
             <artifactId>app-data</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
+            <artifactId>common-utils</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

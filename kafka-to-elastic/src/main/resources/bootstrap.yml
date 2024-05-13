@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: kafka_to_elastic
+  profiles:
+    active: dev
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      username: spring_cloud_user
+      password: '1234'
+  main:
+    allow-bean-definition-overriding: true
