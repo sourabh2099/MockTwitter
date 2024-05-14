@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.twitter.microservice</groupId>
@@ -25,8 +25,8 @@
         <module>elastic/elastic-config</module>
         <module>elastic/elastic-model</module>
         <module>elastic/elastic-query-client</module>
-        <module>config-server</module>
         <module>elastic/elastic-index-client</module>
+        <module>config-server</module>
         <module>common-utils</module>
         <module>elastic-query-service</module>
         <module>elastic-query-web-client</module>
@@ -39,14 +39,13 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <twitter4j.version>4.0.7</twitter4j.version>
         <lombok.version>1.18.20</lombok.version>
-        <spring-boot.version>3.1.5</spring-boot.version>
-        <spring-kafka.version>3.0.12</spring-kafka.version>
+        <spring-boot.version>3.1.2</spring-boot.version>
+        <spring-kafka.version>3.0.9</spring-kafka.version>
         <spring-retry.version>2.0.3</spring-retry.version>
         <avro.version>1.11.3</avro.version>
-        <kafka-avro-serializer.version>5.5.1</kafka-avro-serializer.version>
+        <kafka-avro-serializer.version>7.4.0</kafka-avro-serializer.version>
         <spring-cloud-starter-bootstrap.version>4.0.4</spring-cloud-starter-bootstrap.version>
-        <elasticsearch.version>8.11.0</elasticsearch.version>
-        <elasticsearch-rest-high-level-client.version>7.17.12</elasticsearch-rest-high-level-client.version>
+        <elasticsearch.version>7.17.4</elasticsearch.version>
         <spring-web.version>6.0.11</spring-web.version>
     </properties>
     <repositories>
@@ -235,7 +234,7 @@
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
-                <version>${elasticsearch-rest-high-level-client.version}</version>
+                <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -251,7 +250,7 @@
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
+                <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>

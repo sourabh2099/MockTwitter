@@ -49,12 +49,27 @@
         </dependency>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-index-client</artifactId>
+            <artifactId>elastic-model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-model</artifactId>
+            <artifactId>elastic-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
+            <artifactId>elastic-index-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
         </dependency>
     </dependencies>
-
 </project>

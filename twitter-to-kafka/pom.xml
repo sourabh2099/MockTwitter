@@ -33,6 +33,10 @@
         </dependency>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
+            <artifactId>common-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
             <artifactId>kafka-model</artifactId>
         </dependency>
         <dependency>

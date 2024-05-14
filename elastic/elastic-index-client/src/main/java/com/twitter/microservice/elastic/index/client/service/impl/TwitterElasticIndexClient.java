@@ -11,7 +11,6 @@ import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TwitterElasticIndexClient implements ElasticIndexClient<TwitterIndexModel> {
@@ -31,6 +30,7 @@ public class TwitterElasticIndexClient implements ElasticIndexClient<TwitterInde
     public List<String> save(List<TwitterIndexModel> documents) {
         List<IndexQuery> indexQueries = elasticIndexUtil.getIndexQueries(documents);
         List<IndexedObjectInformation> indexedObjectInformation = elasticsearchOperations.bulkIndex(indexQueries, IndexCoordinates.of(elasticConfigData.getIndexName()));
-        return indexedObjectInformation.stream().map(IndexedObjectInformation::id).collect(Collectors.toList());
+//        return indexedObjectInformation.stream().map(item -> item.id()).collect(Collectors.toList());
+        return null;
     }
 }

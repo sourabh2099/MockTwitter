@@ -12,9 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ElasticQueryAssemblerResponseModel extends RepresentationModelAssemblerSupport<TwitterIndexModel, ElasticQueryServiceResponseModel> {
+public class ElasticQueryAssemblerResponseModel
+        extends RepresentationModelAssemblerSupport<TwitterIndexModel, ElasticQueryServiceResponseModel> {
     private final IndexClientToResponseModel transformer;
-    public ElasticQueryAssemblerResponseModel(Class<?> controllerClass, Class<ElasticQueryAssemblerResponseModel> resourceType, IndexClientToResponseModel transformer) {
+    public ElasticQueryAssemblerResponseModel(Class<?> controllerClass,
+                                              Class<ElasticQueryAssemblerResponseModel> resourceType,
+                                              IndexClientToResponseModel transformer) {
         super(ElasticQueryController.class, ElasticQueryServiceResponseModel.class);
         this.transformer = transformer;
     }

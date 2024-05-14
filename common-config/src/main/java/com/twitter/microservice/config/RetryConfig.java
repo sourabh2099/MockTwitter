@@ -16,6 +16,7 @@ public class RetryConfig {
 
     @Bean
     public RetryTemplate retryTemplate(){
+        System.out.println(retryConfigData.toString());
         RetryTemplate retryTemplate = new RetryTemplate();
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(retryConfigData.getMaxAttempts());

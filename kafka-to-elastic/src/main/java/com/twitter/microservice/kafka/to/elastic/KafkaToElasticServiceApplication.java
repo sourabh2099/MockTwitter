@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.time.LocalDateTime;
 
 @SpringBootApplication
+@ComponentScan("com.twitter.microservice")
 public class KafkaToElasticServiceApplication {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaToElasticServiceApplication.class);
 
