@@ -15,9 +15,7 @@ import java.util.stream.Collectors;
 public class ElasticQueryAssemblerResponseModel
         extends RepresentationModelAssemblerSupport<TwitterIndexModel, ElasticQueryServiceResponseModel> {
     private final IndexClientToResponseModel transformer;
-    public ElasticQueryAssemblerResponseModel(Class<?> controllerClass,
-                                              Class<ElasticQueryAssemblerResponseModel> resourceType,
-                                              IndexClientToResponseModel transformer) {
+    public ElasticQueryAssemblerResponseModel(IndexClientToResponseModel transformer) {
         super(ElasticQueryController.class, ElasticQueryServiceResponseModel.class);
         this.transformer = transformer;
     }

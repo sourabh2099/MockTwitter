@@ -8,8 +8,8 @@ public class IndexClientToResponseModel {
     public ElasticQueryServiceResponseModel getResponseModel(TwitterIndexModel indexModel){
         return ElasticQueryServiceResponseModel.builder()
                 .id(indexModel.getId())
-                .userId(indexModel.getUserId())
-                .createdAt(indexModel.getCreateAt())
+                .userId(Long.parseLong(indexModel.getUserId()))
+                .createdAt(indexModel.getCreatedAt())
                 .text(indexModel.getText())
                 .build();
     }

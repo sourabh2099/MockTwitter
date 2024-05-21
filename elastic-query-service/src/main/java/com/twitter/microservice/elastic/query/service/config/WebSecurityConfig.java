@@ -43,12 +43,12 @@ public class WebSecurityConfig {
                 .authorizeRequests(requests -> {
                     requests.requestMatchers(Arrays.stream(pathsToIgnore)
                             .map(AntPathRequestMatcher::new)
-                            .collect(Collectors.toList()).toArray(new RequestMatcher[]{}));
+                            .collect(Collectors.toList()).toArray(new RequestMatcher[]{})).permitAll().anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
-                .oauth2ResourceServer((oauth) -> oauth.jwt(
-                        jwt -> jwt.jwtAuthenticationConverter(twitterQueryUserJwtConverter())
+                .oauth2ResourceServer((oauth) -> oauth
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(twitterQueryUserJwtConverter())
                 ));
         return httpSecurity.build();
     }

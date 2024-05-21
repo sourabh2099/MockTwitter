@@ -31,10 +31,6 @@
         </dependency>
         <dependency>
             <groupId>com.twitter.microservice</groupId>
-            <artifactId>elastic-query-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter.microservice</groupId>
             <artifactId>elastic-query-service-common</artifactId>
         </dependency>
         <dependency>
@@ -52,6 +48,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
+            <artifactId>app-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter.microservice</groupId>
+            <artifactId>elastic-query-client</artifactId>
         </dependency>
     </dependencies>
     <build>
