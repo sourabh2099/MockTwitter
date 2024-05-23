@@ -32,6 +32,7 @@ public class ElasticQueryServiceImpl implements ElasticQueryService {
 
     @Override
     public List<ElasticQueryServiceResponseModel> getAllDocuments() {
-        return elasticQueryAssemblerReponseModel.toModels(queryClient.getAllIndexModels());
+        List<TwitterIndexModel> indexModels = queryClient.getAllIndexModels();
+        return elasticQueryAssemblerReponseModel.toModels(indexModels);
     }
 }

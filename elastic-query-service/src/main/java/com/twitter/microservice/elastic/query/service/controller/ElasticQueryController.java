@@ -8,13 +8,14 @@ import jakarta.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/documents", produces = "application/vnd.api.v1.json") // using content negotiation here
+@RequestMapping(value = "/documents") // using content negotiation here
 public class ElasticQueryController {
     private final ElasticQueryService elasticQueryService;
     private static Logger LOG = LoggerFactory.getLogger(ElasticQueryController.class);
@@ -22,11 +23,19 @@ public class ElasticQueryController {
     public ElasticQueryController(ElasticQueryService elasticQueryService) {
         this.elasticQueryService = elasticQueryService;
     }
+
+//    @PostAuthorize("hasPermission(returnObject,'READ')")
     @GetMapping("")
     public ResponseEntity<List<ElasticQueryServiceResponseModel>> getAllDocuments(){
-        List<ElasticQueryServiceResponseModel> allDocuments = elasticQueryService.getAllDocuments();
-        LOG.info("Elastic search Fetched documents of size {}",allDocuments.size());
-        return ResponseEntity.ok(allDocuments);
+        try{
+            List<ElasticQueryServiceResponseModel> allDocuments = elasticQueryService.getAllDocuments();
+            LOG.info("Elastic search Fetched documents of size {}",allDocuments.size());
+            return ResponseEntity.ok(allDocuments);
+        }catch (Exception e){
+            LOG.error("Error found ",e);
+            return ResponseEntity.internalServerError().body(null);
+        }
+
     }
     @GetMapping("/{id}")
     public ResponseEntity<ElasticQueryServiceResponseModel> getDocumentById(String id){
